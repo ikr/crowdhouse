@@ -1,0 +1,4 @@
+#!/bin/bash
+
+redis-cli set Investors:101 '{"name":"Hans-Peter Tschümperlin","password_hash":"5599f3ba096af591b4ea3e65b805f22adb71b87ad9ba61c3318a3be802e121aa","last_password_change":"2018-06-01T12:35:00+02"}'
+redis-cli set Investors:202 '{"name":"Ivan Krechetov","password_hash":"bf91014d17e2eb6f7a865190a498e60917a691e1446f796478b20ba2cabe2df3","last_password_change":"2018-07-12T09:00:00+02"}'
