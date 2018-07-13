@@ -21,3 +21,6 @@ $ curl -s -H 'Content-Type: application/json' -X PUT -d '{"password":"woo"}' htt
 …
 $ curl -s http://localhost:1337/users/202
 ```
+
+The first HTTP request above changes the password for user 202. The second request fetches the user
+record from the both databases, and picks the most recent password update timestamp from the two.
