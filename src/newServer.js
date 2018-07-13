@@ -7,6 +7,10 @@ function notFound () {
     return status(404).send('No matching route found')
 }
 
+function max (s1, s2) {
+    return s1 > s2 ? s1 : s2
+}
+
 module.exports = function ({pgQuery, rGet, rSet}) {
     return [
         get(
@@ -23,7 +27,11 @@ module.exports = function ({pgQuery, rGet, rSet}) {
                 const key = `Investors:${ctx.params.id}`
                 const newHash = await passwordHash(ctx.data.password)
                 const rData = JSON.parse(await rGet(key))
-                const newRData = Object.assign({}, rData, {password_hash: newHash})
+
+                const newRData = Object.assign({}, rData, {
+                    password_hash: newHash,
+                    last_password_change: (new Date()).toISOString()
+                })
 
                 await rSet(
                     key,
@@ -31,18 +39,31 @@ module.exports = function ({pgQuery, rGet, rSet}) {
                 )
 
                 await pgQuery(
-                    'update "Investor" set password_hash = $1 where id = $2',
+                    'update "Investor" set password_hash = $1, last_password_change = now() where id = $2',
                     [newHash, ctx.params.id]
                 )
 
-                return json(newRData)
+                return json({
+                    name: newRData.name,
+                    last_password_change: newRData.last_password_change
+                })
             }
         ),
 
         get(
             '/users/:id',
             async ctx => {
-                return type('applicaion/json').send(await rGet(`Investors:${ctx.params.id}`))
+                const rData = JSON.parse(await rGet(`Investors:${ctx.params.id}`))
+                const {rows} = await pgQuery('select * from "Investor" where id = $1', [ctx.params.id])
+                const pgData = rows[0]
+
+                return json({
+                    name: pgData.name,
+                    last_password_change: max(
+                        String(pgData.last_password_change),
+                        rData.last_password_change
+                    )
+                })
             }
         ),
 
