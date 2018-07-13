@@ -14,7 +14,10 @@ const pgPool = new PgPool({connectionString: 'postgres://postgres@127.0.0.1/sale
 const pgQuery = pgPool.query.bind(pgPool)
 const rClient = redis.createClient()
 
-server({port: parseInt(process.argv[2])}, newServer({pgQuery, rClient})).then(() => {
+server({
+    port: parseInt(process.argv[2]),
+    security: {csrf: false}
+}, newServer({pgQuery, rClient})).then(() => {
     console.log(`crowdhouse listening on port ${process.argv[2]}`)
 }, error => {
     console.dir(new VError(error, 'Failed to start up the HTTP server'))

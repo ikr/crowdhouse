@@ -19,13 +19,13 @@ module.exports = function ({pgQuery, rClient}) {
         put(
             '/users/:id',
             ctx => {
-                console.log(111111111111)
+                console.log('HERE!')
                 return send('ssss')
             }
         ),
 
         get(notFound),
         put(notFound),
-        error(ctx => status(500).type('text/plain').send(ctx.error.trace))
+        error(ctx => status(500).type('text/plain').send(ctx.error))
     ]
 }
