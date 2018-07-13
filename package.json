@@ -17,7 +17,7 @@
     "sync"
   ],
   "author": "Ivan Krechetov <ikr@ikr.su>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "pg": "^7.4.3",
     "redis": "^2.8.0",
