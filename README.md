@@ -15,3 +15,9 @@
 * Start the application HTTP server with `./index 1337`
 
 # API
+
+```
+$ curl -s -H 'Content-Type: application/json' -X PUT -d '{"password":"woo"}' http://localhost:1337/users/202
+…
+$ curl -s http://localhost:1337/users/202
+```
