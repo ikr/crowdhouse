@@ -1,5 +1,6 @@
 # Pre-requisites
 
+* Node.js v8+
 * PostgreSQL server
   * listening on the standard port on host 127.0.0.1
   * no password for the DB user `postgres` required
