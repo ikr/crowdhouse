@@ -1,13 +1,13 @@
 const {join} = require('path')
 const {get, put, error} = require('server/router')
-const {type, status, send} = require('server/reply')
+const {type, status, json} = require('server/reply')
 const passwordHash = require('./passwordHash')
 
 function notFound () {
     return status(404).send('No matching route found')
 }
 
-module.exports = function ({pgQuery, rGetAsync}) {
+module.exports = function ({pgQuery, rGet, rSet}) {
     return [
         get(
             '/doc',
@@ -20,23 +20,29 @@ module.exports = function ({pgQuery, rGetAsync}) {
         put(
             '/users/:id',
             async ctx => {
-                const rData = await rGetAsync(`Investors:${ctx.params.id}`)
+                const key = `Investors:${ctx.params.id}`
+                const newHash = await passwordHash(ctx.data.password)
+                const rData = JSON.parse(await rGet(key))
+                const newRData = Object.assign({}, rData, {password_hash: newHash})
 
-                console.dir(rData)
+                await rSet(
+                    key,
+                    JSON.stringify(newRData)
+                )
 
                 await pgQuery(
                     'update "Investor" set password_hash = $1 where id = $2',
-                    [await passwordHash(ctx.data.password), ctx.params.id]
+                    [newHash, ctx.params.id]
                 )
 
-                return send('---')
+                return json(newRData)
             }
         ),
 
         get(
             '/users/:id',
             async ctx => {
-                return type('applicaion/json').send(await rGetAsync(`Investors:${ctx.params.id}`))
+                return type('applicaion/json').send(await rGet(`Investors:${ctx.params.id}`))
             }
         ),
 
