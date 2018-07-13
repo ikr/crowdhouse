@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+psql -U postgres -h 127.0.0.1 -c 'drop database salesforce' && \
+psql -U postgres -h 127.0.0.1 -c 'create database salesforce' && \
+psql -U postgres -h 127.0.0.1 -d salesforce -f "$DIR/../src/salesforce_schema.sql" && \
+psql -U postgres -h 127.0.0.1 -d salesforce -f "$DIR/../src/salesforce_data.sql"
