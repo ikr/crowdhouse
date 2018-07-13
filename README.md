@@ -7,7 +7,7 @@
 
 # Setup
 
-* Create the dummy "salesforce" relational DB with `./bin/saleseforce`
+* Create the dummy "salesforce" relational DB with `./bin/salesforce`
   * the database schema will be created
   * the table investors will be pre-filled with some test data
 * Start the application HTTP server with `./index 1337`
