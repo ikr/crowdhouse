@@ -21,7 +21,8 @@
   "dependencies": {
     "pg": "^7.4.3",
     "redis": "^2.8.0",
-    "server": "^1.0.18"
+    "server": "^1.0.18",
+    "verror": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^5.1.0",
