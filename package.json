@@ -1,0 +1,30 @@
+{
+  "name": "crowdhouse",
+  "version": "1.0.0",
+  "description": "Crowdhouse test assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./tests/**/*.spec.js",
+    "lint": "eslint ./src ./index.js ./tests",
+    "tdd": "mocha --watch -R min ./tests/**/*.spec.js",
+    "unit-test": "mocha ./tests/unit/*.spec.js"
+  },
+  "keywords": [
+    "password",
+    "auth",
+    "data",
+    "api",
+    "sync"
+  ],
+  "author": "Ivan Krechetov <ikr@ikr.su>",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^7.4.3",
+    "redis": "^2.8.0",
+    "server": "^1.0.18"
+  },
+  "devDependencies": {
+    "eslint": "^5.1.0",
+    "mocha": "^5.2.0"
+  }
+}
